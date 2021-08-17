@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('')->group(function () {
+
+
+    /*
+    * Login
+    */
+    Route::get('/', 'Auth\LoginController@getLoginView');
+    Route::post('/login', 'Auth\LoginController@login')->name('auth.login');
+
+    /*
+    * Register
+    */
+    Route::get('/register', 'Auth\LoginController@create');
+    Route::post('/register', 'Auth\LoginController@register')->name('auth.register');
+
 });
+
+
