@@ -1,4 +1,4 @@
-# kryptoval-test-laravel-demo
+# kryptova-test-laravel-demo
 Laravel test for job appliance
 
 - Install Laravel
