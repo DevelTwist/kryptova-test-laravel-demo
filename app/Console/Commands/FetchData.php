@@ -48,7 +48,7 @@ class FetchData extends Command
         foreach( $employees as $employee ){
             
             if( !Employee::find($employee->id) ){
-                EmployeeInsertion::dispatch($employee->employee_name, $employee->employee_age, $employee->employee_salary, $employee->profile_image);
+                EmployeeInsertion::dispatch($employee->employee_name, $employee->employee_age, $employee->employee_salary, $employee->profile_image)->onQueue('processing');
                 $this->info(' employee: ' . $employee->employee_name . '  has been added on Queue!' );
             }
         }
