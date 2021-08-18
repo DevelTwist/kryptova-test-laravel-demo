@@ -66,7 +66,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             return redirect()->to('/');
         } else {
-            return redirect()->to('/');
+            return redirect()->to('/')->withErrors(['User does not match']);
         }
 
 

@@ -6,6 +6,10 @@
     @if(isset($message))
         <h1> {{ $message }} </h1>
     @endif
+
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
     
     <div class="row justify-content-center">
         

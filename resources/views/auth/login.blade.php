@@ -76,6 +76,9 @@
                         </form>
 
                     </div>
+                    @if($errors->any())
+                       {{ $errors->first() }}
+                    @endif
                 
                     <div>
                         <a href="{{ url('/register') }}" class="text-sm text-gray-700 underline">Register</a>
