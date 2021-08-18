@@ -6,10 +6,12 @@ use Illuminate\Console\Command;
 
 use App\Models\Employee;
 use App\Http\Traits\EmployeesTrait;
-use Exception;
+use App\Jobs\EmployeeInsertion;
 
 class FetchData extends Command
 {
+    use EmployeesTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -45,17 +47,9 @@ class FetchData extends Command
 
         foreach( $employees as $employee ){
             
-            if( !Employee::find($employee->id)->exists() ){
-
-                Employee::create([
-                    'name' => $employee->employee_name,
-                    'age' => $employee->employee_age,
-                    'salary' => $employee->employee_salary,
-                    'profile_picture' => $employee->profile_image
-                ]);
-
-                $this->info( 'id: ' . $employee->id . ' employee: ' . $employee->name . '  has been added !' );
-                break;
+            if( !Employee::find($employee->id) ){
+                EmployeeInsertion::dispatch($employee->employee_name, $employee->employee_age, $employee->employee_salary, $employee->profile_image);
+                $this->info(' employee: ' . $employee->employee_name . '  has been added on Queue!' );
             }
         }
 

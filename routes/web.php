@@ -40,6 +40,7 @@ Route::prefix('')->group(function () {
         Route::patch('/students/{id}', 'Data\StudentController@update')->name('update.student');
         Route::delete('/students/{id}', 'Data\StudentController@destroy')->name('delete.student');
     });
+
 });
 
 

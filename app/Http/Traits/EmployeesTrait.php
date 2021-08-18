@@ -5,7 +5,7 @@ use Exception;
 
 trait EmployeesTrait {
 
-    protected static $fetchAPI = 'http://dummy.restapiexample.com/api/v1/employees';
+    public static $fetchAPI = 'http://dummy.restapiexample.com/api/v1/employees';
 
     public function getEmployeeData(){
 
