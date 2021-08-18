@@ -21,15 +21,25 @@ Route::prefix('')->group(function () {
     /*
     * Login
     */
-    Route::get('/', 'Auth\LoginController@getLoginView');
+    Route::get('/', 'Auth\LoginController@getLoginView')->name('login');
     Route::post('/login', 'Auth\LoginController@login')->name('auth.login');
+    Route::get('/logout', 'Auth\LoginController@logout')->name('auth.logout');
 
     /*
     * Register
     */
-    Route::get('/register', 'Auth\LoginController@create');
+    Route::get('/register', 'Auth\LoginController@getRegisterView');
     Route::post('/register', 'Auth\LoginController@register')->name('auth.register');
 
+    /*
+    * Students
+    */
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/students', 'Data\StudentController@index')->name('show.student');
+        Route::post('/students', 'Data\StudentController@create')->name('create.student');
+        Route::patch('/students/{id}', 'Data\StudentController@update')->name('update.student');
+        Route::delete('/students/{id}', 'Data\StudentController@destroy')->name('delete.student');
+    });
 });
 
 

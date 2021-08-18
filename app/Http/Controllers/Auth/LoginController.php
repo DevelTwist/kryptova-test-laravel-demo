@@ -13,12 +13,7 @@ use Illuminate\Support\Facades\File;
 class LoginController extends Controller
 {
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function create()
+    public function getRegisterView()
     {
         return view('auth.register');
     }
@@ -40,7 +35,6 @@ class LoginController extends Controller
         $user = User::create($data);
 
         if ($request->hasFile('profile_thumbnail')) {
-
             if ($request->file('profile_thumbnail')->isValid()) {
                 $extension = $request->profile_thumbnail->extension();
                 $filename = $user->id;
@@ -48,14 +42,17 @@ class LoginController extends Controller
                 $filename = strtolower($filename);
 
                 $request->profile_thumbnail->storeAs('/public/thumbnail/', $filename.".".$extension);
-                $url = Storage::url("/thumbnail". $filename.".".$extension);
+                $url = Storage::url("thumbnail/". $filename.".".$extension);
    
                 $user->profile_thumbnail = $url;
                 $user->save();
             }
-
-            return $user;
         }
+
+        return view('auth.register' , [
+            'message' => 'User has been registered successfully',
+            'user' => $user->toArray()
+        ]);
     }
 
     public function login(Request $request)
@@ -66,15 +63,23 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($login)) {
-            $user = Auth::user();
-            return $user;
+            $request->session()->regenerate();
+            return redirect()->to('/');
         } else {
-            return response(['message' => 'Invalid Login'], 401);
+            return redirect()->to('/');
         }
+
+
     }
 
     public function getLoginView()
     {
         return view('auth/login');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->to('/');
     }
 }
