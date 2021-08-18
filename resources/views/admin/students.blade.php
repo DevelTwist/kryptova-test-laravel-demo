@@ -91,7 +91,7 @@
             </div>
             <div class="form-group">
               <label for="last_name">Last Name</label>
-              <input type="text" name="last_name" class="form-control" required>
+              <input type="text" name="last_name" class="form-control">
             </div>
             <div class="form-group">
               <label for="address">Address</label>
