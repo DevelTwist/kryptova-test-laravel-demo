@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeInsertion implements ShouldQueue
 {
@@ -36,13 +37,11 @@ class EmployeeInsertion implements ShouldQueue
      */
     public function handle()
     {
-
         Employee::create([
             'name' => $this->name,
             'age' => $this->age,
             'salary' => $this->salary,
             'profile_picture' => $this->thumbnail_profile
         ]);
-        
     }
 }
